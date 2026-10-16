@@ -3,11 +3,13 @@ title: "RESTful 接口开发规范"
 date: 2019-01-28
 categories: 开发规范
 tags: [RESTful, API, 开发规范]
-toc: true
 excerpt: "REST 概念、RESTful 架构风格，以及一份可落地的接口开发规范。"
 ---
 
 版本：v1.0
+
+* 目录
+{:toc}
 
 
 ## REST概念

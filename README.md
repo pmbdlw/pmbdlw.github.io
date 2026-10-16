@@ -1,22 +1,19 @@
 # pmbdlw.github.io
 
-个人博客，基于 [GitHub Pages](https://pages.github.com/) + [Jekyll](https://jekyllrb.com/) 构建，主题为 [moonwalk](https://github.com/abhinavs/moonwalk)（极简、自带暗色模式）。
+个人博客，基于 [GitHub Pages](https://pages.github.com/) + [Jekyll](https://jekyllrb.com/) 构建，主题为官方支持主题 [jekyll-theme-modernist](https://github.com/pages-themes/modernist)。
 
 线上地址：<https://pmbdlw.github.io>
 
 ## 目录结构
 
 ```
-_config.yml      站点配置（标题、主题、功能开关、Markdown 解析、插件）
-index.md         首页（home 布局，自动列出全部文章）
-tags.html        标签归档页，地址 /tags
+_config.yml      站点配置（标题、主题、Markdown 解析、插件）
+index.md         首页，自动列出全部文章和分类
 404.html         404 页面
-search.json      文章索引，供主题的站内搜索和链接悬停预览使用
+_layouts/
+  post.html      文章布局（标题、日期、分类、返回首页）
 _posts/          已发布的文章，文件名必须是 YYYY-MM-DD-标题.md
 _drafts/         草稿，不会发布（见下文）
-_data/
-  home.yml       顶部导航和页脚的链接
-_includes/       覆盖主题的两个文件（见「关于主题」）
 assets/img/      图片资源
 ```
 
@@ -30,18 +27,19 @@ title: "文章标题"
 date: 2026-01-01
 categories: 开发规范
 tags: [标签一, 标签二]
-toc: true          # 可选，自动生成目录
 ---
 
 正文从这里开始，使用 GitHub 风格 Markdown。
+
+* 目录
+{:toc}
 ```
 
 要点：
 
 - **文件名用 ASCII**，中文标题写在 front matter 的 `title` 里，这样生成的链接才干净（`/posts/英文短标题/`）。
-- 目录用 front matter 的 `toc: true` 开启，由主题渲染成可折叠的「目录」块。**不要用 `[TOC]`**，kramdown 不认识它，会原样显示。
+- 自动生成目录用 `* 目录` + `{:toc}`，**不要用 `[TOC]`**，kramdown 不认识后者，会原样显示。
 - 引用图片：把图片放进 `assets/img/`，文件名用 ASCII，然后 `![说明](/assets/img/图片名.png)`。
-- 标签会自动汇总到 `/tags` 页面，不用手动维护。
 
 提交并推送到 `master` 分支后，GitHub Pages 会自动重新构建，大约 1 分钟后生效。
 
@@ -109,17 +107,14 @@ published: false
 
 ## 关于主题
 
-主题用 `remote_theme: abhinavs/moonwalk` 加载，构建时自动从 GitHub 拉取，本仓库不保存主题文件。两个注意点：
+用的是 GitHub Pages [官方支持主题](https://pages.github.com/themes/)，在 `_config.yml` 里一行 `theme:` 就能切换，构建最稳。
 
-1. **插件白名单**：moonwalk 自带的 `jekyll-soopr-seo-tag`、`jekyll-markdown-output`、`jekyll-llms-output` 不在 [GitHub Pages 白名单](https://pages.github.com/versions/)内，不能写进 `_config.yml`，否则构建失败。本仓库改用白名单内的 `jekyll-seo-tag` / `jekyll-feed` / `jekyll-sitemap`，主题布局里的 `{% raw %}{% seo %}{% endraw %}` 和 `{% raw %}{% feed_meta %}{% endraw %}` 由它们提供。
-2. **`_data` 不会被继承**：remote_theme 只带 `_layouts` / `_includes` / `_sass` / `assets`，所以导航栏和页脚的数据必须由本仓库的 `_data/home.yml` 提供。
+如果以后想换成官方列表之外的第三方主题，要用 `remote_theme: 作者/主题名`，并注意两个坑：
 
-`_includes/` 下有两个文件是主题同名文件的本地覆盖版，为了把界面文字改成中文：
+1. **插件白名单**：第三方主题的 `_config.yml` 往往带了 GitHub Pages [不允许的插件](https://pages.github.com/versions/)，照抄会导致构建失败，只能改用白名单内的等价插件。
+2. **老版本 Sass**：GitHub Pages 的构建环境固定在 Jekyll 3.10 + Ruby Sass 3.7.4（2019 年起已停止维护）。现代主题的样式表常用 `@use`、`clamp(1rem + 2vw, …)` 这类新语法，老 Sass 编译不了 —— 有的直接报错让构建失败，有的（比如 `@use`）不报错但原样输出，导致线上样式全部丢失。**本地用新版 Jekyll 构建通过不代表线上能用**，换主题后一定要打开线上页面确认。
 
-- `toc.html` —— 目录标题由 `Table of Contents` 改为「目录」
-- `date_and_social_share.html` —— 日期改成中文格式；阅读时间改成按字数估算（上游按空格分词，中文整篇会被算成 1 个词）
-
-升级主题后如果这两处显示异常，对比上游同名文件同步一次即可。外观开关（亮/暗、导航栏、阅读进度条、代码复制按钮等）都在 `_config.yml` 的 `theme_config` 里，每项都有注释。
+真要用这类主题，可靠做法是改用 GitHub Actions 自己跑 Jekyll 4 构建再部署，不走 Pages 自带的构建。
 
 ## 本地预览（可选）
 
