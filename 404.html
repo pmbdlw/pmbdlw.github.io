@@ -4,8 +4,34 @@ title: 页面不存在
 permalink: /404.html
 ---
 
-<h1>404</h1>
+<div class="not-found">
+  <div class="not-found-code">404</div>
+  <h1 class="not-found-title">你走错路了。</h1>
+  <p class="not-found-lede">
+    这个页面不在这儿。可能是搬走了，可能从来就没有过，也可能被月亮吃掉了。
+  </p>
 
-<p>抱歉，你访问的页面不存在，可能已经被移动或删除。</p>
+  <div class="not-found-actions">
+    <a href="{{ "/" | relative_url }}" class="not-found-cta">← 回到首页</a>
+    {% if site.posts.size > 0 %}
+      {% assign random_post = site.posts | sample %}
+      <a href="{{ random_post.url | relative_url }}" class="not-found-cta not-found-cta-secondary">
+        随便看一篇 →
+      </a>
+    {% endif %}
+  </div>
 
-<p><a href="{{ '/' | relative_url }}">← 返回首页</a></p>
+  {% if site.posts.size > 0 %}
+    <div class="not-found-recent">
+      <h3>或者从这些里面挑一篇：</h3>
+      <ul>
+        {% for post in site.posts limit:5 %}
+          <li class="post-list-item">
+            <span class="home-date">{{ post.date | date: site.theme_config.date_format }}&raquo;</span>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</div>

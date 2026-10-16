@@ -1,0 +1,40 @@
+{%- comment -%}
+  本文件覆盖 moonwalk 主题的同名文件，改动：日期格式改成中文，"min read" 改成「分钟」。
+  升级主题后如果文章头部信息异常，对比上游 _includes/date_and_social_share.html 再同步一次即可。
+{%- endcomment -%}
+<div class="post-meta">
+  <div class="post-meta-line">
+    {% if page.author %}
+      <span class="post-meta-author">{{ page.author }}</span>
+      <span class="post-meta-sep">·</span>
+    {% endif %}
+    {% if page.date %}
+      <time class="post-meta-date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%Y 年 %-m 月 %-d 日" }}
+      </time>
+    {% endif %}
+    {% if site.theme_config.show_reading_time == true %}
+      {%- comment -%}
+        上游用 number_of_words 按空格分词，中文整篇会被算成 1 个词，所以改成按字数估算。
+        按每分钟 400 字计，不足 1 分钟按 1 分钟显示。
+      {%- endcomment -%}
+      {% assign chars = content | strip_html | strip_newlines | size %}
+      {% assign minutes = chars | divided_by: 400 %}
+      {% if minutes < 1 %}{% assign minutes = 1 %}{% endif %}
+      <span class="post-meta-sep">·</span>
+      <span class="post-meta-reading">约 {{ minutes }} 分钟读完</span>
+    {% endif %}
+  </div>
+
+  {% if site.theme_config.show_tags == true and page.tags %}
+    <div class="post-meta-tags">
+      {% for tag in page.tags %}
+        <a href="{{ "/tags" | relative_url }}#{{ tag | slugify }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="soopr-btn"
+     {% if site.twitter.username %}data-twitter="{{ site.twitter.username }}"{% endif %}
+  ></div>
+</div>

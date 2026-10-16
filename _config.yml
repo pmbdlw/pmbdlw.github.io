@@ -1,23 +1,54 @@
 # ---- 站点信息 ----
 title: pmbdlw 的博客
+author: pmbdlw
 description: 技术笔记与开发规范
 lang: zh-CN
 url: https://pmbdlw.github.io
 baseurl: ""
 
-# ---- 主题（GitHub Pages 官方支持主题）----
-theme: jekyll-theme-modernist
-show_downloads: false
+# ---- 主题 ----
+# moonwalk 不是 GitHub Pages 官方支持的主题，所以必须用 remote_theme 而不是 theme。
+# remote_theme 由 jekyll-remote-theme 插件实现，该插件在 GitHub Pages 白名单内，
+# 构建时会自动从 GitHub 拉取主题，不需要把主题文件复制进本仓库。
+remote_theme: abhinavs/moonwalk
+
+# moonwalk 的功能开关，全部由主题的布局读取
+theme_config:
+  appearance: "auto"          # light / dark / auto（auto 跟随系统）
+  appearance_toggle: true     # 右下角显示亮/暗切换按钮
+  date_format: "%Y-%m-%d"     # 列表里的日期格式
+  show_description: true      # 首页显示站点描述
+  show_navbar: true           # 显示顶部导航（内容在 _data/home.yml）
+  show_footer: true           # 显示页脚链接（内容在 _data/home.yml）
+  show_copyright: true
+  show_blog: true             # 首页显示文章列表
+  show_projects: false        # 不需要作品集卡片
+  show_old_projects: false
+  show_misc_list: false
+  show_reading_time: true     # 文章页显示预计阅读时间
+  show_tags: true             # 文章页显示标签
+  show_code_copy: true        # 代码块右上角复制按钮
+  show_progress_bar: true     # 文章页顶部阅读进度条
+  show_back_to_top: true      # 回到顶部按钮
+  show_post_nav: true         # 文章底部上一篇/下一篇
+  show_toc: true              # 允许文章用 toc: true 开启目录
+  show_footnote_tooltips: true # 脚注悬浮显示，不用跳到页底
+  show_link_previews: true    # 鼠标悬停站内链接时显示预览卡（依赖 search.json）
+  home:
+    title_blog: 文章          # 首页文章列表的小标题
 
 # ---- Markdown 解析 ----
-# 不配置 kramdown 时，中文标点、表格、围栏代码块容易解析异常
 markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
   syntax_highlighter: rouge
+highlighter: rouge
 
-# ---- 文章地址与默认布局 ----
+sass:
+  style: compressed
+
+# ---- 文章地址与默认值 ----
 permalink: /posts/:title/
 
 defaults:
@@ -26,17 +57,23 @@ defaults:
       type: posts
     values:
       layout: post
+      lang: zh-CN
   - scope:
       path: ""
       type: pages
     values:
       layout: default
+      lang: zh-CN
 
-# ---- 插件（均为 GitHub Pages 白名单内插件）----
+# ---- 插件 ----
+# 以下均在 GitHub Pages 白名单内。
+# 注意：moonwalk 自带的 jekyll-soopr-seo-tag / jekyll-markdown-output /
+# jekyll-llms-output 不在白名单内，不能在这里启用，否则 Pages 构建会失败。
+# 主题布局里的 {% seo %} 由 jekyll-seo-tag 提供，{% feed_meta %} 由 jekyll-feed 提供。
 plugins:
   - jekyll-seo-tag
+  - jekyll-feed
   - jekyll-sitemap
-  - jekyll-relative-links
 
 # ---- 不参与站点构建的文件 ----
 exclude:
