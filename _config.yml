@@ -1,1 +1,48 @@
+# ---- 站点信息 ----
+title: pmbdlw 的博客
+description: 技术笔记与开发规范
+lang: zh-CN
+url: https://pmbdlw.github.io
+baseurl: ""
+
+# ---- 主题（GitHub Pages 官方支持主题）----
 theme: jekyll-theme-modernist
+show_downloads: false
+
+# ---- Markdown 解析 ----
+# 不配置 kramdown 时，中文标点、表格、围栏代码块容易解析异常
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# ---- 文章地址与默认布局 ----
+permalink: /posts/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# ---- 插件（均为 GitHub Pages 白名单内插件）----
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-relative-links
+
+# ---- 不参与站点构建的文件 ----
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .gitignore

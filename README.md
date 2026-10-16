@@ -1,37 +1,55 @@
-## 欢迎
+# pmbdlw.github.io
 
-You can use the [editor on GitHub](https://github.com/pmbdlw/andrewliu.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+个人博客，基于 [GitHub Pages](https://pages.github.com/) + [Jekyll](https://jekyllrb.com/) 构建，主题为官方支持主题 [jekyll-theme-modernist](https://github.com/pages-themes/modernist)。
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+线上地址：<https://pmbdlw.github.io>
 
-### Markdown
+## 目录结构
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+_config.yml      站点配置（标题、主题、Markdown 解析、插件）
+index.md         首页，自动列出全部文章
+404.html         404 页面
+_layouts/
+  post.html      文章布局（标题、日期、返回首页）
+_posts/          文章目录，文件名必须是 YYYY-MM-DD-标题.md
+assets/img/      图片资源
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## 写一篇新文章
 
-### Jekyll Themes
+在 `_posts/` 下新建文件，文件名格式为 `YYYY-MM-DD-英文短标题.md`（日期和短横线不能省略，否则 Jekyll 不会把它识别为文章）：
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pmbdlw/andrewliu.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```markdown
+---
+title: "文章标题"
+date: 2026-01-01
+categories: 开发规范
+tags: [标签一, 标签二]
+---
 
-### Support or Contact
+正文从这里开始，使用 GitHub 风格 Markdown。
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+* 目录
+{:toc}
+```
+
+要点：
+
+- **文件名用 ASCII**，中文标题写在 front matter 的 `title` 里，这样生成的链接才干净（`/posts/英文短标题/`）。
+- 自动生成目录用 `* 目录` + `{:toc}`，**不要用 `[TOC]`**，kramdown 不认识后者，会原样显示。
+- 引用图片：把图片放进 `assets/img/`，文件名用 ASCII，然后 `![说明](/assets/img/图片名.png)`。
+
+提交并推送到 `master` 分支后，GitHub Pages 会自动重新构建，大约 1 分钟后生效。
+
+## 本地预览（可选）
+
+```bash
+bundle install
+bundle exec jekyll serve
+# 打开 http://127.0.0.1:4000
+```
+
+## License
+
+见 [LICENSE](LICENSE)。
