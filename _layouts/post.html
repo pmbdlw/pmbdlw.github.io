@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<p><a href="{{ '/' | relative_url }}">← 返回首页</a></p>
+
+<h1>{{ page.title }}</h1>
+
+<p>
+  <small>
+    {{ page.date | date: "%Y-%m-%d" }}
+    {%- if page.categories.size > 0 %} · {{ page.categories | join: " / " }}{% endif %}
+  </small>
+</p>
+
+{{ content }}
+
+<hr>
+
+<p><a href="{{ '/' | relative_url }}">← 返回首页</a></p>
