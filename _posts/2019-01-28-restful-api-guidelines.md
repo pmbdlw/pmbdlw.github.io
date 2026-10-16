@@ -1,10 +1,16 @@
-# RESTful 接口开发规范 
+---
+title: "RESTful 接口开发规范"
+date: 2019-01-28
+categories: 开发规范
+tags: [RESTful, API, 开发规范]
+excerpt: "REST 概念、RESTful 架构风格，以及一份可落地的接口开发规范。"
+---
 
 版本：v1.0
 
-时间：2019-01-28
+* 目录
+{:toc}
 
-[TOC]
 
 ## REST概念
 REST是Representational State Transfer的英文缩写，翻译成中文是"表述性状态转移"。具体含义下一章节会做详细解释
