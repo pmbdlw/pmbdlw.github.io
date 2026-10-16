@@ -1,0 +1,17 @@
+---
+---
+
+// 本文件覆盖 moonwalk 主题的 assets/css/main.scss。
+//
+// 上游用的是 Sass 模块语法 @use，而 GitHub Pages 跑的是 Jekyll 3.x +
+// jekyll-sass-converter 1.x（libsass）。libsass 不认识 @use，会把它当成未知
+// at-rule 原样输出 —— 线上 main.css 就只剩这三行 @use，整站样式全部丢失。
+// 本地用 Jekyll 4（dart-sass）构建时不会暴露这个问题，所以只能在线上发现。
+//
+// 改用老式 @import 后 libsass 和 dart-sass 都能正确编译。主题的 _sass/*.scss
+// 内部没有使用模块系统（没有 @use / @forward / 命名空间函数），所以 @import
+// 与 @use 的产物完全等价。升级主题时如果 _sass 的文件结构变了，这里要跟着改。
+
+@import "moonwalk";
+@import "list";
+@import "syntax";
